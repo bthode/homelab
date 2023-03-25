@@ -1,1 +1,1 @@
-# homelab
+Documenting my home lab setup. 
