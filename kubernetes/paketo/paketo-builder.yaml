@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paketobuildpacks
+  labels:
+    app: paketobuildpacks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: paketobuildpacks
+  template:
+    metadata:
+      labels:
+        app: paketobuildpacks
+    spec:
+      containers:
+      - name: paketobuildpacks
+        image: paketobuildpacks/builder
+
