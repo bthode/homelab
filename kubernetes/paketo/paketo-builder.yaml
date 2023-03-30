@@ -1,20 +1,62 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: paketobuildpacks
-  labels:
-    app: paketobuildpacks
+  name: paketo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: paketobuildpacks
+      app: paketo-builder
   template:
     metadata:
       labels:
-        app: paketobuildpacks
+        app: paketo-builder
     spec:
       containers:
-      - name: paketobuildpacks
-        image: paketobuildpacks/builder
-
+        - name: paketo-builder
+          image: paketobuildpacks/builder
+          ports:
+          volumeMounts:
+            - name: docker-daemon-volume
+              mountPath: /etc/docker
+            - name: docker-config
+              mountPath: /root/.docker
+      volumes:
+        - name: docker-daemon-volume
+          configMap:
+            name: docker-configmap
+            items:
+              - key: daemon.json
+                path: daemon.json
+        - name: docker-config
+          configMap:
+            name: docker-configmap
+            items:
+              - key: config.json
+                path: config.json
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: docker-configmap
+data:
+  daemon.json: |
+    {
+      "insecure-registries": ["10.1.1.10:32000"],
+      "log-driver": "json-file",
+      "log-opts": {
+        "max-size": "10m",
+        "max-file": "3"
+      }
+    }
+  config.json: |
+{
+    "auths": {
+        "10.1.1.10:32000": {
+            "auth": ""
+        }
+    },
+    "HttpHeaders": {
+        "User-Agent": "tatq/1.0"
+    }
+}
