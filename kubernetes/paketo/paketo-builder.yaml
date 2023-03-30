@@ -50,13 +50,13 @@ data:
       }
     }
   config.json: |
-{
-    "auths": {
-        "10.1.1.10:32000": {
-            "auth": ""
+    {
+        "auths": {
+            "10.1.1.10:32000": {
+                "auth": ""
+            }
+        },
+        "HttpHeaders": {
+            "User-Agent": "tatq/1.0"
         }
-    },
-    "HttpHeaders": {
-        "User-Agent": "tatq/1.0"
     }
-}
