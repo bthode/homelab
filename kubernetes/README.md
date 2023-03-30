@@ -45,6 +45,23 @@ kubectl -n kube-system edit configmap/coredns
 
 DNS Troubleshooting
 
+## Trust the local registry
+sudo mkdir -p /var/snap/microk8s/current/args/certs.d/10.1.1.10:32000
+sudo touch /var/snap/microk8s/current/args/certs.d/10.1.1.10:32000/hosts.toml
+
+# /var/snap/microk8s/current/args/certs.d/10.1.1.10:32000/hosts.toml
+server = "http://10.1.1.10:32000"
+
+[host."http://10.1.1.10:32000"]
+capabilities = ["pull", "resolve"]
+
+## Then restart MicroK8s
+microk8s stop
+microk8s start
+
+## To test deploying from the private registry (Update image accordingly)
+microk8s kubectl create deployment nginx --image=10.1.1.1:32000/mynginx:latest
+
 ## Check for DNS Errors
 kubectl logs --namespace=kube-system -l k8s-app=kube-dns
 

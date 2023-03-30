@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: telegram-webhook
+spec:
+  selector:
+    matchLabels:
+      app: telegram-webhook
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: telegram-webhook
+    spec:
+      containers:
+      - name: webhook
+        image: 10.1.1.10:32000/creator-test:0.1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"

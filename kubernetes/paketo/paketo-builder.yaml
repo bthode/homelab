@@ -15,12 +15,18 @@ spec:
       containers:
         - name: paketo-builder
           image: paketobuildpacks/builder
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              git clone https://github.com/bthode/telegram-webhook.git
+              /cnb/lifecycle/creator -app=telegram-webhook/ 10.1.1.10:32000/creator-test:0.1
           ports:
           volumeMounts:
             - name: docker-daemon-volume
               mountPath: /etc/docker
             - name: docker-config
-              mountPath: /root/.docker
+              mountPath: /home/cnb/.docker
       volumes:
         - name: docker-daemon-volume
           configMap:
@@ -52,7 +58,7 @@ data:
   config.json: |
     {
         "auths": {
-            "10.1.1.10:32000": {
+            "10.1.1.10:32000/": {
                 "auth": ""
             }
         },
