@@ -1,0 +1,8 @@
+# https://microk8s.io/docs/explain-launch-config
+---
+version: 0.1.0
+extraKubeletArgs:
+  --cluster-domain: cluster.local
+  --cluster-dns: 10.152.183.10
+addons:
+  - name: dns ingress cert-manager registry observability rbac metallb:10.1.1.200-10.1.1.254

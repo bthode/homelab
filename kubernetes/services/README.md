@@ -1,0 +1,1 @@
+A external service entry for where my Docker container registry is running.

@@ -20,7 +20,7 @@ spec:
             - "-c"
             - |
               git clone https://github.com/bthode/telegram-webhook.git
-              /cnb/lifecycle/creator -app=telegram-webhook/ 10.1.1.10:32000/creator-test:0.1
+              /cnb/lifecycle/creator -app=telegram-webhook/ registry:32000/creator-test:0.1
           ports:
           volumeMounts:
             - name: docker-daemon-volume
@@ -48,7 +48,7 @@ metadata:
 data:
   daemon.json: |
     {
-      "insecure-registries": ["10.1.1.10:32000"],
+      "insecure-registries": ["registry:32000"],
       "log-driver": "json-file",
       "log-opts": {
         "max-size": "10m",
@@ -58,11 +58,8 @@ data:
   config.json: |
     {
         "auths": {
-            "10.1.1.10:32000/": {
+            "registry:32000/": {
                 "auth": ""
             }
-        },
-        "HttpHeaders": {
-            "User-Agent": "tatq/1.0"
         }
     }
