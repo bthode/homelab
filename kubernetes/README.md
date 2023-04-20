@@ -92,3 +92,10 @@ kubectl port-forward -n observability service/kube-prom-stack-grafana --address 
 http://localhost:3000
 
 admin / [obtained password]
+
+
+
+
+# Tekton
+kubectl apply --filename \
+https://storage.googleapis.com/tekton-releases/pipeline/latest/release.yaml
