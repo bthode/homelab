@@ -14,9 +14,12 @@ spec:
     spec:
       containers:
       - name: webhook
-        image: registry:32000/creator-test:0.1
+        image: registry:32000/creator-test:0.3
         ports:
         - containerPort: 8080
         env:
         - name: PORT
           value: "8080"
+        - name: BOOTSTRAP_SERVERS_CONFIG
+          value: my-cluster-kafka-bootstrap:9092
+

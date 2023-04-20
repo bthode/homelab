@@ -20,7 +20,7 @@ spec:
             - "-c"
             - |
               git clone https://github.com/bthode/telegram-webhook.git
-              /cnb/lifecycle/creator -app=telegram-webhook/ registry:32000/creator-test:0.1
+              /cnb/lifecycle/creator -app=telegram-webhook/ registry:32000/creator-test:0.3
           ports:
           volumeMounts:
             - name: docker-daemon-volume
