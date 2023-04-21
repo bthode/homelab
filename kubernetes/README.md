@@ -27,7 +27,7 @@ microk8s enable metallb:10.1.1.200-10.1.1.254
 cat /etc/nuc.conf
 nameserver 10.1.1.1
 
-rg nuc /var/snap/microk8s/current/args/kubelet
+rg resolv /var/snap/microk8s/current/args/kubelet
 --resolv-conf=/etc/nuc.conf
 
 3. Modify the coreDNS configmap
@@ -35,7 +35,7 @@ Add Google's DNS server
 
 Either command should work
 
-Update Corefile forward . /etc/resolv.conf to forward . /etc/resolv.conf 8.8.8.8
+Update coredns forward . /etc/resolv.conf to forward . /etc/resolv.conf 8.8.8.8
 
 kubectl get configmap -n kube-system coredns -o yaml > coredns.yaml
 EDIT FILE
@@ -48,11 +48,14 @@ kubectl -n kube-system edit configmap/coredns
 
 # DNS Troubleshooting
 
+kubectl -n kube-system rollout restart deployment coredns
+
 ## Check for DNS Errors
 kubectl logs --namespace=kube-system -l k8s-app=kube-dns
 
 # Test resolution from a pod
-kubectl exec dnsutils -it -- nslookup google.com
+kubectl exec curl -it -- nslookup registry
+ google.com
 
 ## Drop into a busybox session on the cluster
 kubectl run curl --image=radial/busyboxplus:curl -i --tty
@@ -92,9 +95,6 @@ kubectl port-forward -n observability service/kube-prom-stack-grafana --address 
 http://localhost:3000
 
 admin / [obtained password]
-
-
-
 
 # Tekton
 kubectl apply --filename \
