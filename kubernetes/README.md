@@ -13,7 +13,7 @@ microk8s enable dns ingress cert-manager registry observability
 ```
 
 #### Enable MetalLB
-My subnet is 10.1.1.0/24 and I've excluded 200-254 from DHPC assignment to reserve for MetalLB.
+My subnet is 10.1.1.0/24 and I've excluded 200-254 from DHCP assignment to reserve for MetalLB.
 ```
 microk8s enable metallb:10.1.1.200-10.1.1.254
 ```
